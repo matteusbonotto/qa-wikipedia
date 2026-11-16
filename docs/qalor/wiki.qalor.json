@@ -1,0 +1,487 @@
+{
+ "format": "qalor-bundle",
+ "version": 1,
+ "rev": "wiki-2026-11-16",
+ "catalogs": [
+  {
+   "ref": "per:matheus",
+   "id": "pf-per-matheus",
+   "kind": "person",
+   "name": "Matheus Bonotto",
+   "role": "qa",
+   "color": "#4F3BEF",
+   "icon": "https://github.com/matteusbonotto.png",
+   "description": "QA responsável"
+  },
+  {
+   "ref": "tag:portfolio",
+   "id": "pf-tag-portfolio",
+   "kind": "tag",
+   "name": "Portfólio",
+   "color": "#C2410C",
+   "description": "Material de portfólio"
+  },
+  {
+   "ref": "c:wikimedia",
+   "id": "pf-c-wikipedia",
+   "kind": "client",
+   "name": "Wikipédia",
+   "color": "#3366CC",
+   "icon": "https://www.google.com/s2/favicons?sz=128&domain=wikipedia.org",
+   "description": "Wikimedia Foundation"
+  },
+  {
+   "ref": "p:wikipedia",
+   "id": "pf-p-wiki-web",
+   "kind": "product",
+   "name": "Site",
+   "parentRef": "c:wikimedia",
+   "color": "#3366CC",
+   "icon": "https://www.google.com/s2/favicons?sz=128&domain=pt.wikipedia.org",
+   "description": "pt.wikipedia.org"
+  }
+ ],
+ "projects": [
+  {
+   "key": "WIKI",
+   "name": "Wikipédia - Site",
+   "description": "Ciclo de teste completo da Wikipédia em português: plano, casos, execução, defeitos e automação Playwright.",
+   "clientRef": "c:wikimedia",
+   "productRef": "p:wikipedia",
+   "qaRef": "per:matheus",
+   "team": [
+    "per:matheus"
+   ],
+   "startedAt": "2026-11-16",
+   "study": true,
+   "minPass": 90,
+   "folders": [
+    {
+     "ref": "f-busca",
+     "type": "case",
+     "name": "Pesquisa"
+    },
+    {
+     "ref": "f-artigo",
+     "type": "case",
+     "name": "Artigo"
+    },
+    {
+     "ref": "f-idiomas",
+     "type": "case",
+     "name": "Idiomas"
+    },
+    {
+     "ref": "f-paginas",
+     "type": "case",
+     "name": "Páginas especiais"
+    },
+    {
+     "ref": "f-aparencia",
+     "type": "case",
+     "name": "Aparência"
+    },
+    {
+     "ref": "f-celular",
+     "type": "case",
+     "name": "Celular"
+    },
+    {
+     "ref": "f-a11y",
+     "type": "case",
+     "name": "Acessibilidade"
+    }
+   ],
+   "docs": [
+    {
+     "ref": "t-plano",
+     "type": "plan",
+     "title": "Plano de testes - Wikipédia em português (site)",
+     "status": "approved",
+     "data": {
+      "objectives": [
+       "verify-req",
+       "find-defects",
+       "confidence",
+       "reduce-risk"
+      ],
+      "inScope": [
+       "Pesquisa (exata, sugestões, sem acento, sem resultado)",
+       "Leitura de artigo (título, índice, cabeçalho fixo, links, referências)",
+       "Troca de idioma",
+       "Artigo aleatório, histórico e artigo inexistente",
+       "Menu Aparência (texto, largura e cor)",
+       "Versão para celular (pt.m.wikipedia.org)",
+       "Acessibilidade básica (teclado, texto alternativo, erros no console)"
+      ],
+      "outScope": [
+       "Edição e publicação de artigos",
+       "Login e cadastro",
+       "Outras wikis do Wikimedia (Commons, Wikcionário)",
+       "API (vai para o projeto qa-wikipedia-api, semana de 23/11)",
+       "Carga e desempenho",
+       "Auditoria completa de acessibilidade (WCAG inteira)"
+      ],
+      "basis": [
+       "r-busca",
+       "r-artigo",
+       "r-idiomas",
+       "r-paginas",
+       "r-aparencia",
+       "r-celular",
+       "r-a11y"
+      ],
+      "assumptions": [
+       "Testes só de leitura, sem editar nada na Wikipédia",
+       "O conteúdo muda por ser editado por voluntários, então os testes conferem estrutura e não texto",
+       "O comportamento observado no site em 16/11/2026 é a base de teste (não há especificação pública)"
+      ],
+      "stakeholders": [
+       {
+        "role": "QA",
+        "name": "Matheus Bonotto",
+        "resp": "Planejar, escrever casos, executar, automatizar e reportar defeitos"
+       },
+       {
+        "role": "Dono do produto",
+        "name": "Wikimedia Foundation",
+        "resp": "Fonte do comportamento observado"
+       }
+      ],
+      "independence": "author",
+      "communication": [
+       {
+        "what": "Status da execução e defeitos abertos",
+        "who": "Recrutadores / comunidade (README)",
+        "when": "A cada etapa da semana"
+       },
+       {
+        "what": "Relatório HTML do Playwright",
+        "who": "Quem abrir o repositório",
+        "when": "A cada push (GitHub Actions)"
+       }
+      ],
+      "levels": [
+       "system",
+       "acceptance"
+      ],
+      "types": [
+       "functional",
+       "non-functional",
+       "black-box",
+       "regression"
+      ],
+      "quality": [
+       "functional-suitability",
+       "usability",
+       "accessibility",
+       "compatibility"
+      ],
+      "techniques": [
+       "ep",
+       "state-transition",
+       "error-guessing",
+       "checklist",
+       "exploratory"
+      ],
+      "environments": [
+       "prod"
+      ],
+      "data": "Artigos Brasil, Brasília, Santos Dumont e São Paulo; termo sem acento sao paulo; termo sem resultado xptoqa123zzz; endereço inexistente /wiki/ArtigoQueNaoExisteQA123. Desktop Chromium 1280x720 e Pixel 7.",
+      "entry": [
+       "Site no ar",
+       "Plano revisado",
+       "Casos revisados antes da execução (terça)"
+      ],
+      "exit": [
+       "100% do smoke passando",
+       "Todos os casos executados ao menos uma vez (manual e automação)",
+       "Defeitos registrados com passos, esperado, obtido e evidência",
+       "Taxa de aprovação de pelo menos 90% (site real em produção)"
+      ],
+      "metrics": [
+       "pass-rate",
+       "coverage",
+       "execution",
+       "risk-coverage"
+      ],
+      "risks": [
+       "k-busca",
+       "k-conteudo",
+       "k-tema",
+       "k-celular",
+       "k-a11y",
+       "k-limite"
+      ],
+      "estTechnique": "three-point",
+      "estA": 6,
+      "estM": 9,
+      "estB": 14,
+      "budget": "Projeto de estudo (sem custo)",
+      "start": "2026-11-16",
+      "end": "2026-11-20"
+     }
+    },
+    {
+     "ref": "r-busca",
+     "type": "requirement",
+     "title": "Pesquisa de artigos",
+     "status": "approved",
+     "data": {
+      "kind": "story",
+      "priority": "critical",
+      "asA": "leitor",
+      "iWant": "pesquisar um assunto",
+      "soThat": "chegar no artigo certo",
+      "acFormat": "rule",
+      "criteria": [
+       "Termo igual ao título de um artigo abre direto o artigo",
+       "Ao digitar aparecem sugestões de artigos",
+       "Termo sem acento chega ao artigo ou a um redirecionamento para ele",
+       "Termo sem artigo correspondente mostra a página de resultados com \"A pesquisa não produziu resultados.\""
+      ],
+      "external": "https://pt.wikipedia.org"
+     }
+    },
+    {
+     "ref": "r-artigo",
+     "type": "requirement",
+     "title": "Leitura do artigo",
+     "status": "approved",
+     "data": {
+      "kind": "story",
+      "priority": "critical",
+      "asA": "leitor",
+      "iWant": "ler o artigo com título, índice, links e referências",
+      "soThat": "entender o assunto e conferir as fontes",
+      "acFormat": "rule",
+      "criteria": [
+       "O título do artigo aparece no topo",
+       "O índice lista as seções e leva até a seção clicada",
+       "Ao rolar a página, o cabeçalho fixo mostra o título e a pesquisa",
+       "Links internos abrem outros artigos",
+       "O artigo tem a seção de referências"
+      ],
+      "external": "https://pt.wikipedia.org"
+     }
+    },
+    {
+     "ref": "r-idiomas",
+     "type": "requirement",
+     "title": "Outros idiomas",
+     "status": "approved",
+     "data": {
+      "kind": "story",
+      "priority": "high",
+      "asA": "leitor",
+      "iWant": "trocar o artigo para outro idioma",
+      "soThat": "ler o mesmo assunto na minha língua",
+      "acFormat": "rule",
+      "criteria": [
+       "O botão de idiomas mostra quantos idiomas existem e lista cada um",
+       "Escolher English abre o mesmo assunto na Wikipédia em inglês",
+       "Artigo sem versão em outro idioma não quebra o botão"
+      ],
+      "external": "https://pt.wikipedia.org"
+     }
+    },
+    {
+     "ref": "r-paginas",
+     "type": "requirement",
+     "title": "Páginas especiais",
+     "status": "approved",
+     "data": {
+      "kind": "story",
+      "priority": "medium",
+      "asA": "leitor",
+      "iWant": "usar artigo aleatório, histórico e páginas que não existem",
+      "soThat": "navegar e conferir mudanças",
+      "acFormat": "rule",
+      "criteria": [
+       "Especial:Aleatória abre um artigo diferente a cada acesso",
+       "Ver histórico mostra a lista de edições com data e autor",
+       "Endereço de artigo que não existe responde 404 e oferece pesquisar o termo"
+      ],
+      "external": "https://pt.wikipedia.org"
+     }
+    },
+    {
+     "ref": "r-aparencia",
+     "type": "requirement",
+     "title": "Aparência da leitura",
+     "status": "approved",
+     "data": {
+      "kind": "story",
+      "priority": "medium",
+      "asA": "leitor",
+      "iWant": "ajustar tamanho do texto, largura e cor",
+      "soThat": "ler com conforto",
+      "acFormat": "rule",
+      "criteria": [
+       "O menu Aparência oferece Texto (Pequeno, Padrão, Grande), Largura (Padrão, Largo) e Cor (Automático, Claro, Escuro)",
+       "A escolha muda a página na hora",
+       "A escolha continua depois de recarregar a página"
+      ],
+      "external": "https://pt.wikipedia.org"
+     }
+    },
+    {
+     "ref": "r-celular",
+     "type": "requirement",
+     "title": "Leitura no celular",
+     "status": "approved",
+     "data": {
+      "kind": "story",
+      "priority": "high",
+      "asA": "leitor",
+      "iWant": "ler e pesquisar pelo celular",
+      "soThat": "usar a Wikipédia fora do computador",
+      "acFormat": "rule",
+      "criteria": [
+       "pt.m.wikipedia.org abre o artigo em layout de celular, sem rolagem lateral",
+       "Menu e pesquisa funcionam em tela de celular",
+       "Seções do artigo abrem e fecham ao tocar no título"
+      ],
+      "external": "https://pt.wikipedia.org"
+     }
+    },
+    {
+     "ref": "r-a11y",
+     "type": "requirement",
+     "title": "Acessibilidade básica",
+     "status": "approved",
+     "data": {
+      "kind": "story",
+      "priority": "medium",
+      "asA": "leitor",
+      "iWant": "navegar pelo teclado e por leitor de tela",
+      "soThat": "usar o site sem mouse e sem enxergar a tela",
+      "acFormat": "rule",
+      "criteria": [
+       "Link \"Ir para o conteúdo\" aparece no primeiro Tab",
+       "Pesquisa, idiomas e Aparência funcionam só com teclado",
+       "Imagens do artigo têm texto alternativo ou legenda",
+       "A página não tem erros de JavaScript no console"
+      ],
+      "external": "https://pt.wikipedia.org"
+     }
+    },
+    {
+     "ref": "k-busca",
+     "type": "risk",
+     "title": "Pesquisa não levar ao artigo certo",
+     "status": "identified",
+     "data": {
+      "kind": "product",
+      "likelihood": 2,
+      "impact": 5,
+      "quality": [
+       "functional-suitability"
+      ],
+      "response": "mitigate",
+      "thoroughness": "broad",
+      "cases": [],
+      "owner": "Matheus Bonotto",
+      "notes": "Casos de pesquisa exata, sugestão, sem acento e sem resultado, todos no smoke."
+     }
+    },
+    {
+     "ref": "k-conteudo",
+     "type": "risk",
+     "title": "Conteúdo dos artigos muda a qualquer momento",
+     "status": "identified",
+     "data": {
+      "kind": "project",
+      "likelihood": 5,
+      "impact": 2,
+      "quality": [
+       "maintainability"
+      ],
+      "response": "mitigate",
+      "thoroughness": "broad",
+      "cases": [],
+      "owner": "Matheus Bonotto",
+      "notes": "Os testes conferem estrutura (título, índice, seções) e não o texto do artigo."
+     }
+    },
+    {
+     "ref": "k-tema",
+     "type": "risk",
+     "title": "Mudança do tema Vector 2022 quebrar localizadores",
+     "status": "identified",
+     "data": {
+      "kind": "project",
+      "likelihood": 3,
+      "impact": 3,
+      "quality": [
+       "maintainability"
+      ],
+      "response": "mitigate",
+      "thoroughness": "standard",
+      "cases": [],
+      "owner": "Matheus Bonotto",
+      "notes": "Usar getByRole e textos visíveis; ids só quando estáveis (#firstHeading, #p-lang-btn)."
+     }
+    },
+    {
+     "ref": "k-celular",
+     "type": "risk",
+     "title": "Layout do celular esconder pesquisa ou conteúdo",
+     "status": "identified",
+     "data": {
+      "kind": "product",
+      "likelihood": 2,
+      "impact": 4,
+      "quality": [
+       "usability",
+       "compatibility"
+      ],
+      "response": "mitigate",
+      "thoroughness": "standard",
+      "cases": [],
+      "owner": "Matheus Bonotto",
+      "notes": "Projeto Playwright com Pixel 7 rodando os casos de celular."
+     }
+    },
+    {
+     "ref": "k-a11y",
+     "type": "risk",
+     "title": "Teclado ou leitor de tela não conseguir usar os menus",
+     "status": "identified",
+     "data": {
+      "kind": "product",
+      "likelihood": 2,
+      "impact": 4,
+      "quality": [
+       "accessibility"
+      ],
+      "response": "mitigate",
+      "thoroughness": "standard",
+      "cases": [],
+      "owner": "Matheus Bonotto",
+      "notes": "Casos só com teclado e checagem de texto alternativo; achados viram defeito com evidência."
+     }
+    },
+    {
+     "ref": "k-limite",
+     "type": "risk",
+     "title": "Site público limitar ou bloquear os testes automáticos",
+     "status": "identified",
+     "data": {
+      "kind": "project",
+      "likelihood": 2,
+      "impact": 3,
+      "quality": [
+       "reliability"
+      ],
+      "response": "mitigate",
+      "thoroughness": "standard",
+      "cases": [],
+      "owner": "Matheus Bonotto",
+      "notes": "Poucos workers no CI, retries só no CI e trace na primeira falha."
+     }
+    }
+   ]
+  }
+ ]
+}
