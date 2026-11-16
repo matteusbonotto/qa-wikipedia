@@ -40,7 +40,7 @@ O projeto segue as etapas de um ciclo de teste. Cada uma é entregue no seu dia:
 | Pesquisa (exata, sugestões, sem acento, sem resultado) | Edição e publicação de artigos |
 | Leitura de artigo (título, índice, cabeçalho fixo, links, referências) | Login e cadastro |
 | Troca de idioma | Outras wikis (Commons, Wikcionário) |
-| Artigo aleatório, histórico e artigo inexistente | API (projeto `qa-wikipedia-api`, semana de 23/11) |
+| Artigo aleatório, histórico e artigo inexistente | API (projeto separado, semana de 23/11) |
 | Menu Aparência (texto, largura e cor) | Carga e desempenho |
 | Versão para celular (pt.m.wikipedia.org) | Auditoria completa de WCAG |
 | Acessibilidade básica (teclado, texto alternativo, console) | |
@@ -95,7 +95,7 @@ Também entraram no escopo a versão para celular e a acessibilidade básica, qu
 ## 🗂️ Estrutura
 
 ```text
-qa-pw-auto-wikipedia/
+qa-wikipedia/
 └── docs/
     ├── plano-de-teste.pdf      📄 plano gerado no QAllor
     └── qalor/wiki.qalor.json   fonte do plano, requisitos e riscos (importável no QAllor)
