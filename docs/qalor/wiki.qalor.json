@@ -1,7 +1,7 @@
 {
  "format": "qalor-bundle",
  "version": 1,
- "rev": "wiki-2026-11-16",
+ "rev": "wiki-2026-11-17",
  "catalogs": [
   {
    "ref": "per:matheus",
@@ -380,7 +380,13 @@
       ],
       "response": "mitigate",
       "thoroughness": "broad",
-      "cases": [],
+      "cases": [
+       "c-busca-exata",
+       "c-busca-sugestao",
+       "c-busca-acento",
+       "c-busca-sem-resultado",
+       "c-busca-maiusculas"
+      ],
       "owner": "Matheus Bonotto",
       "notes": "Casos de pesquisa exata, sugestão, sem acento e sem resultado, todos no smoke."
      }
@@ -399,7 +405,11 @@
       ],
       "response": "mitigate",
       "thoroughness": "broad",
-      "cases": [],
+      "cases": [
+       "c-art-titulo",
+       "c-art-indice",
+       "c-art-refs"
+      ],
       "owner": "Matheus Bonotto",
       "notes": "Os testes conferem estrutura (título, índice, seções) e não o texto do artigo."
      }
@@ -418,7 +428,11 @@
       ],
       "response": "mitigate",
       "thoroughness": "standard",
-      "cases": [],
+      "cases": [
+       "c-ap-menu",
+       "c-art-sticky",
+       "c-idi-botao"
+      ],
       "owner": "Matheus Bonotto",
       "notes": "Usar getByRole e textos visíveis; ids só quando estáveis (#firstHeading, #p-lang-btn)."
      }
@@ -438,7 +452,12 @@
       ],
       "response": "mitigate",
       "thoroughness": "standard",
-      "cases": [],
+      "cases": [
+       "c-cel-layout",
+       "c-cel-secoes",
+       "c-cel-busca",
+       "c-cel-menu"
+      ],
       "owner": "Matheus Bonotto",
       "notes": "Projeto Playwright com Pixel 7 rodando os casos de celular."
      }
@@ -457,7 +476,13 @@
       ],
       "response": "mitigate",
       "thoroughness": "standard",
-      "cases": [],
+      "cases": [
+       "c-a11y-pular",
+       "c-a11y-busca-teclado",
+       "c-a11y-menus-teclado",
+       "c-a11y-alt",
+       "c-a11y-foco"
+      ],
       "owner": "Matheus Bonotto",
       "notes": "Casos só com teclado e checagem de texto alternativo; achados viram defeito com evidência."
      }
@@ -479,6 +504,1895 @@
       "cases": [],
       "owner": "Matheus Bonotto",
       "notes": "Poucos workers no CI, retries só no CI e trace na primeira falha."
+     }
+    },
+    {
+     "ref": "c-busca-principal",
+     "type": "case",
+     "title": "Validar a página principal pronta para pesquisar",
+     "status": "approved",
+     "folderRef": "f-busca",
+     "data": {
+      "objective": "A página principal deve abrir com o campo de pesquisa.",
+      "basis": [
+       "r-busca"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional",
+       "tt-smoke"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor acessa a página principal",
+        "data": "https://pt.wikipedia.org",
+        "expected": "o sistema exibe o logotipo da Wikipédia e o campo \"Pesquisar na Wikipédia\""
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-busca-exata",
+     "type": "case",
+     "title": "Validar pesquisa por título exato abrindo o artigo direto",
+     "status": "approved",
+     "folderRef": "f-busca",
+     "data": {
+      "objective": "Título exato deve levar direto ao artigo, sem lista de resultados.",
+      "basis": [
+       "r-busca"
+      ],
+      "priority": "critical",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional",
+       "tt-smoke"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor digita o termo na pesquisa e pressiona Enter",
+        "data": "Brasil",
+        "expected": "o sistema abre /wiki/Brasil com o título \"Brasil\" no topo"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-busca-sugestao",
+     "type": "case",
+     "title": "Validar sugestões de artigos ao digitar",
+     "status": "approved",
+     "folderRef": "f-busca",
+     "data": {
+      "objective": "O autocompletar deve sugerir artigos e abrir o escolhido.",
+      "basis": [
+       "r-busca"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional",
+       "tt-smoke"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor digita parte do termo na pesquisa",
+        "data": "Santos Dum",
+        "expected": "o sistema lista sugestões e a primeira é \"Santos Dumont\", com uma descrição curta"
+       },
+       {
+        "action": "o leitor clica na sugestão \"Santos Dumont\"",
+        "data": "",
+        "expected": "o sistema abre o artigo \"Santos Dumont\""
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-busca-acento",
+     "type": "case",
+     "title": "Validar pesquisa sem acento chegando ao artigo acentuado",
+     "status": "approved",
+     "folderRef": "f-busca",
+     "data": {
+      "objective": "A falta de acento não deve impedir o leitor de chegar ao artigo.",
+      "basis": [
+       "r-busca"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor pesquisa o termo sem acento e pressiona Enter",
+        "data": "sao paulo",
+        "expected": "o sistema abre o artigo \"São Paulo\" (a cidade), com nota apontando para o estado e outros usos"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-busca-sem-resultado",
+     "type": "case",
+     "title": "Validar pesquisa sem artigo correspondente",
+     "status": "approved",
+     "folderRef": "f-busca",
+     "data": {
+      "objective": "Partição inválida: termo que não existe em nenhum artigo.",
+      "basis": [
+       "r-busca"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor pesquisa um termo sem sentido e pressiona Enter",
+        "data": "xptoqa123zzz",
+        "expected": "o sistema abre Especial:Pesquisar com a mensagem \"A pesquisa não produziu resultados.\""
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-busca-vazia",
+     "type": "case",
+     "title": "Validar pesquisa com o campo vazio",
+     "status": "approved",
+     "folderRef": "f-busca",
+     "data": {
+      "objective": "Pesquisa vazia não deve gerar erro.",
+      "basis": [
+       "r-busca"
+      ],
+      "priority": "low",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "error-guessing",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor pressiona Enter com o campo de pesquisa vazio",
+        "data": "",
+        "expected": "o sistema abre a página \"Busca\" (Especial:Pesquisar) sem resultados e sem erro"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-busca-especiais",
+     "type": "case",
+     "title": "Validar pesquisa com caracteres especiais",
+     "status": "approved",
+     "folderRef": "f-busca",
+     "data": {
+      "objective": "Caracteres de HTML na pesquisa não podem quebrar a página nem ser executados.",
+      "basis": [
+       "r-busca"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box",
+       "non-functional"
+      ],
+      "technique": "error-guessing",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor pesquisa um texto com marcação HTML e pressiona Enter",
+        "data": "<script>alert(1)</script>",
+        "expected": "o sistema mostra a página de resultados com o texto escrito literalmente, sem abrir alerta e sem erro"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-busca-maiusculas",
+     "type": "case",
+     "title": "Validar pesquisa sem diferenciar maiúsculas e minúsculas",
+     "status": "approved",
+     "folderRef": "f-busca",
+     "data": {
+      "objective": "Termo todo em minúsculas deve chegar ao mesmo artigo.",
+      "basis": [
+       "r-busca"
+      ],
+      "priority": "low",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor pesquisa o termo em minúsculas e pressiona Enter",
+        "data": "brasília",
+        "expected": "o sistema abre o artigo \"Brasília\""
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-art-titulo",
+     "type": "case",
+     "title": "Validar título do artigo no topo",
+     "status": "approved",
+     "folderRef": "f-artigo",
+     "data": {
+      "objective": "O título é a primeira confirmação de que o leitor está no artigo certo.",
+      "basis": [
+       "r-artigo"
+      ],
+      "priority": "critical",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional",
+       "tt-smoke"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor acessa o artigo",
+        "data": "/wiki/Brasil",
+        "expected": "o sistema exibe \"Brasil\" como título principal (h1) e no título da aba"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-art-indice",
+     "type": "case",
+     "title": "Validar índice levando até a seção clicada",
+     "status": "approved",
+     "folderRef": "f-artigo",
+     "data": {
+      "objective": "O índice deve listar as seções e navegar até elas.",
+      "basis": [
+       "r-artigo"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor confere o índice na lateral",
+        "data": "",
+        "expected": "o sistema lista as seções do artigo, começando por \"Início\" e \"Etimologia\""
+       },
+       {
+        "action": "o leitor clica em \"Etimologia\" no índice",
+        "data": "",
+        "expected": "o sistema rola até a seção e o endereço termina em #Etimologia"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-art-sticky",
+     "type": "case",
+     "title": "Validar cabeçalho fixo ao rolar o artigo",
+     "status": "approved",
+     "folderRef": "f-artigo",
+     "data": {
+      "objective": "Em artigos longos, título e pesquisa devem continuar à mão.",
+      "basis": [
+       "r-artigo"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor rola a página até o meio do artigo",
+        "data": "",
+        "expected": "o sistema mostra no topo um cabeçalho fixo com o título \"Brasil\" e o botão de pesquisa"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-art-link",
+     "type": "case",
+     "title": "Validar link interno abrindo outro artigo",
+     "status": "approved",
+     "folderRef": "f-artigo",
+     "data": {
+      "objective": "Links internos são a principal forma de navegar.",
+      "basis": [
+       "r-artigo"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor clica em um link interno do primeiro parágrafo (texto azul)",
+        "data": "",
+        "expected": "o sistema abre o artigo do link, com o mesmo título do texto clicado"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-art-refs",
+     "type": "case",
+     "title": "Validar seção de referências",
+     "status": "approved",
+     "folderRef": "f-artigo",
+     "data": {
+      "objective": "Referências permitem conferir as fontes.",
+      "basis": [
+       "r-artigo"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor vai até o fim do artigo",
+        "data": "",
+        "expected": "o sistema mostra a seção \"Referências\" com uma lista numerada de fontes"
+       },
+       {
+        "action": "o leitor clica em uma nota de rodapé no texto, por exemplo [1]",
+        "data": "",
+        "expected": "o sistema leva até a referência correspondente na lista"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-art-redirect",
+     "type": "case",
+     "title": "Validar redirecionamento de nome alternativo",
+     "status": "approved",
+     "folderRef": "f-artigo",
+     "data": {
+      "objective": "Nomes alternativos devem levar ao artigo principal avisando o leitor.",
+      "basis": [
+       "r-artigo"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor acessa um nome alternativo do artigo",
+        "data": "/wiki/Brazil",
+        "expected": "o sistema abre /wiki/Brasil e mostra \"(Redirecionado de Brazil)\" abaixo do título"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-art-imagem",
+     "type": "case",
+     "title": "Validar ampliação de imagem do artigo",
+     "status": "approved",
+     "folderRef": "f-artigo",
+     "data": {
+      "objective": "Imagens devem abrir em tamanho maior com a legenda.",
+      "basis": [
+       "r-artigo"
+      ],
+      "priority": "low",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor clica na primeira imagem do corpo do artigo",
+        "data": "",
+        "expected": "o sistema abre a imagem ampliada (visualizador de mídia) com legenda e opção de fechar"
+       },
+       {
+        "action": "o leitor fecha o visualizador",
+        "data": "",
+        "expected": "o sistema volta ao artigo na mesma posição"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-art-console",
+     "type": "case",
+     "title": "Validar artigo sem erros de JavaScript",
+     "status": "approved",
+     "folderRef": "f-artigo",
+     "data": {
+      "objective": "Erro de script costuma quebrar menus sem aviso visível.",
+      "basis": [
+       "r-artigo"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "non-functional",
+       "black-box"
+      ],
+      "technique": "error-guessing",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor abre o artigo com o console do navegador aberto",
+        "data": "/wiki/Brasil",
+        "expected": "o console não mostra erros de JavaScript (pageerror)"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-idi-botao",
+     "type": "case",
+     "title": "Validar botão de idiomas com a quantidade disponível",
+     "status": "approved",
+     "folderRef": "f-idiomas",
+     "data": {
+      "objective": "O botão deve informar quantos idiomas existem.",
+      "basis": [
+       "r-idiomas"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor confere o botão de idiomas no topo do artigo",
+        "data": "",
+        "expected": "o sistema mostra o botão com o total de idiomas, por exemplo \"304 idiomas\""
+       },
+       {
+        "action": "o leitor clica no botão",
+        "data": "",
+        "expected": "o sistema abre a lista de idiomas com campo de busca"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-idi-ingles",
+     "type": "case",
+     "title": "Validar troca do artigo para inglês",
+     "status": "approved",
+     "folderRef": "f-idiomas",
+     "data": {
+      "objective": "Escolher English abre o mesmo assunto na Wikipédia em inglês.",
+      "basis": [
+       "r-idiomas"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional",
+       "tt-smoke"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor abre a lista de idiomas e escolhe \"English\"",
+        "data": "",
+        "expected": "o sistema abre https://en.wikipedia.org/wiki/Brazil"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-idi-busca",
+     "type": "case",
+     "title": "Validar busca dentro da lista de idiomas",
+     "status": "approved",
+     "folderRef": "f-idiomas",
+     "data": {
+      "objective": "Com centenas de idiomas, o leitor precisa filtrar.",
+      "basis": [
+       "r-idiomas"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor abre a lista de idiomas e digita no campo de busca da lista",
+        "data": "Españ",
+        "expected": "o sistema filtra a lista e mostra \"Español\""
+       },
+       {
+        "action": "o leitor escolhe \"Español\"",
+        "data": "",
+        "expected": "o sistema abre o artigo na Wikipédia em espanhol"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-idi-sem",
+     "type": "case",
+     "title": "Validar artigo que só existe em português",
+     "status": "approved",
+     "folderRef": "f-idiomas",
+     "data": {
+      "objective": "Partição: artigo sem versão em outro idioma.",
+      "basis": [
+       "r-idiomas"
+      ],
+      "priority": "low",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor abre um artigo sem outras versões (escolhido em Especial:Páginas sem interwikis)",
+        "data": "",
+        "expected": "o botão de idiomas mostra que não há outros idiomas ou oferece adicionar link, sem erro"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-pg-aleatoria",
+     "type": "case",
+     "title": "Validar artigo aleatório diferente a cada acesso",
+     "status": "approved",
+     "folderRef": "f-paginas",
+     "data": {
+      "objective": "Especial:Aleatória deve sortear artigos.",
+      "basis": [
+       "r-paginas"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor acessa Especial:Aleatória",
+        "data": "/wiki/Especial:Aleatória",
+        "expected": "o sistema abre um artigo qualquer"
+       },
+       {
+        "action": "o leitor acessa Especial:Aleatória de novo",
+        "data": "",
+        "expected": "o sistema abre um artigo diferente do anterior"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-pg-historico",
+     "type": "case",
+     "title": "Validar histórico de edições do artigo",
+     "status": "approved",
+     "folderRef": "f-paginas",
+     "data": {
+      "objective": "O histórico mostra quem mudou o quê e quando.",
+      "basis": [
+       "r-paginas"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor clica em \"Ver histórico\"",
+        "data": "",
+        "expected": "o sistema lista as edições, 50 por página, cada uma com data, hora, autor, tamanho e diferença em bytes"
+       },
+       {
+        "action": "o leitor clica em \"anterior\" na primeira linha",
+        "data": "",
+        "expected": "o sistema mostra a comparação (diff) entre as duas versões"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-pg-inexistente",
+     "type": "case",
+     "title": "Validar artigo que não existe",
+     "status": "approved",
+     "folderRef": "f-paginas",
+     "data": {
+      "objective": "Endereço inexistente deve responder 404 e ajudar o leitor.",
+      "basis": [
+       "r-paginas"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor acessa um endereço de artigo que não existe",
+        "data": "/wiki/ArtigoQueNaoExisteQA123",
+        "expected": "o sistema responde HTTP 404 e oferece procurar o termo na Wikipédia e nos projetos irmãos (Wikicionário, Wikilivros, Wikiquote)"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-pg-citar",
+     "type": "case",
+     "title": "Validar ferramenta \"Citar esta página\"",
+     "status": "approved",
+     "folderRef": "f-paginas",
+     "data": {
+      "objective": "Leitores usam a Wikipédia como fonte e precisam da citação.",
+      "basis": [
+       "r-paginas"
+      ],
+      "priority": "low",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor abre o menu Ferramentas e clica em \"Citar esta página\"",
+        "data": "",
+        "expected": "o sistema abre Especial:Citar com o artigo \"Brasil\" e formatos de citação, como ABNT"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-ap-menu",
+     "type": "case",
+     "title": "Validar opções do menu Aparência",
+     "status": "approved",
+     "folderRef": "f-aparencia",
+     "data": {
+      "objective": "O menu deve oferecer as três preferências de leitura.",
+      "basis": [
+       "r-aparencia"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor abre o menu Aparência",
+        "data": "",
+        "expected": "o sistema mostra Texto (Pequeno, Padrão, Grande), Largura (Padrão, Largo) e Cor (Automático, Claro, Escuro)"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-ap-texto",
+     "type": "case",
+     "title": "Validar texto Grande aumentando a fonte",
+     "status": "approved",
+     "folderRef": "f-aparencia",
+     "data": {
+      "objective": "A escolha deve mudar o texto na hora.",
+      "basis": [
+       "r-aparencia"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "state-transition",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)",
+       "que o texto está em \"Padrão\""
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor escolhe Texto \"Grande\"",
+        "data": "",
+        "expected": "o sistema aumenta a fonte do corpo do artigo (de 16 px para 20 px) sem recarregar a página"
+       },
+       {
+        "action": "o leitor escolhe Texto \"Pequeno\"",
+        "data": "",
+        "expected": "o sistema diminui a fonte para menos que o tamanho Padrão"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-ap-largura",
+     "type": "case",
+     "title": "Validar largura Larga ocupando a tela",
+     "status": "approved",
+     "folderRef": "f-aparencia",
+     "data": {
+      "objective": "Largura Larga deve usar a tela toda em monitores grandes.",
+      "basis": [
+       "r-aparencia"
+      ],
+      "priority": "low",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "state-transition",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)",
+       "que a janela tem 1280 px de largura"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor escolhe Largura \"Largo\"",
+        "data": "",
+        "expected": "o sistema expande o conteúdo para a largura da janela"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-ap-escuro",
+     "type": "case",
+     "title": "Validar tema Escuro",
+     "status": "approved",
+     "folderRef": "f-aparencia",
+     "data": {
+      "objective": "O tema escuro deve trocar fundo e texto sem esconder conteúdo.",
+      "basis": [
+       "r-aparencia"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box",
+       "non-functional"
+      ],
+      "technique": "state-transition",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor escolhe Cor \"Escuro\"",
+        "data": "",
+        "expected": "o sistema troca para fundo escuro e texto claro; links e tabelas continuam legíveis"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-ap-persistir",
+     "type": "case",
+     "title": "Validar preferências mantidas depois de recarregar",
+     "status": "approved",
+     "folderRef": "f-aparencia",
+     "data": {
+      "objective": "A preferência não pode se perder ao trocar de página.",
+      "basis": [
+       "r-aparencia"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "state-transition",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor escolhe Texto \"Grande\" e Cor \"Escuro\"",
+        "data": "",
+        "expected": "o sistema aplica as duas escolhas"
+       },
+       {
+        "action": "o leitor recarrega a página e abre outro artigo",
+        "data": "/wiki/Brasília",
+        "expected": "o sistema mantém texto Grande e tema Escuro"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-cel-layout",
+     "type": "case",
+     "title": "Validar artigo no celular sem rolagem lateral",
+     "status": "approved",
+     "folderRef": "f-celular",
+     "data": {
+      "objective": "Conteúdo largo demais é o defeito mais comum no celular.",
+      "basis": [
+       "r-celular"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "non-functional"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional",
+       "tt-smoke"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor usa um celular (Pixel 7) e acessa pt.m.wikipedia.org"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor abre o artigo",
+        "data": "/wiki/Brasil",
+        "expected": "o sistema mostra o layout de celular e a página não rola para os lados"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-cel-secoes",
+     "type": "case",
+     "title": "Validar seções que abrem e fecham ao tocar",
+     "status": "approved",
+     "folderRef": "f-celular",
+     "data": {
+      "objective": "No celular as seções começam fechadas para encurtar a página.",
+      "basis": [
+       "r-celular"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "state-transition",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor usa um celular (Pixel 7) e acessa pt.m.wikipedia.org",
+       "que o artigo \"Brasil\" está aberto"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor confere a seção \"Etimologia\"",
+        "data": "",
+        "expected": "o sistema mostra só o título da seção, com o conteúdo fechado"
+       },
+       {
+        "action": "o leitor toca no título \"Etimologia\"",
+        "data": "",
+        "expected": "o sistema abre o conteúdo da seção"
+       },
+       {
+        "action": "o leitor toca no título de novo",
+        "data": "",
+        "expected": "o sistema fecha o conteúdo da seção"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-cel-busca",
+     "type": "case",
+     "title": "Validar pesquisa no celular",
+     "status": "approved",
+     "folderRef": "f-celular",
+     "data": {
+      "objective": "A pesquisa precisa funcionar na tela pequena.",
+      "basis": [
+       "r-celular"
+      ],
+      "priority": "high",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "ep",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor usa um celular (Pixel 7) e acessa pt.m.wikipedia.org"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor toca no ícone de pesquisa",
+        "data": "",
+        "expected": "o sistema abre o campo de pesquisa em tela cheia com o teclado"
+       },
+       {
+        "action": "o leitor digita o termo e escolhe a primeira sugestão",
+        "data": "Santos Dumont",
+        "expected": "o sistema abre o artigo \"Santos Dumont\" no layout de celular"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-cel-menu",
+     "type": "case",
+     "title": "Validar menu principal no celular",
+     "status": "approved",
+     "folderRef": "f-celular",
+     "data": {
+      "objective": "O menu dá acesso a Início, Aleatório e Definições.",
+      "basis": [
+       "r-celular"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor usa um celular (Pixel 7) e acessa pt.m.wikipedia.org"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor toca no botão de menu",
+        "data": "",
+        "expected": "o sistema abre o menu com \"Início\" e \"Aleatório\""
+       },
+       {
+        "action": "o leitor toca em \"Aleatório\"",
+        "data": "",
+        "expected": "o sistema abre um artigo aleatório"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-cel-desktop",
+     "type": "case",
+     "title": "Validar troca para a versão desktop pelo celular",
+     "status": "approved",
+     "folderRef": "f-celular",
+     "data": {
+      "objective": "O leitor pode precisar de recursos que só existem no desktop.",
+      "basis": [
+       "r-celular"
+      ],
+      "priority": "low",
+      "level": "system",
+      "types": [
+       "functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor usa um celular (Pixel 7) e acessa pt.m.wikipedia.org",
+       "que o artigo \"Brasil\" está aberto"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor rola até o rodapé e toca em \"Versão desktop\"",
+        "data": "",
+        "expected": "o sistema abre o mesmo artigo no layout de desktop"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-a11y-pular",
+     "type": "case",
+     "title": "Validar link \"Ir para o conteúdo\" no primeiro Tab",
+     "status": "approved",
+     "folderRef": "f-a11y",
+     "data": {
+      "objective": "Quem usa teclado precisa pular o menu.",
+      "basis": [
+       "r-a11y"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "non-functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor pressiona Tab uma vez",
+        "data": "",
+        "expected": "o sistema mostra e foca o link \"Ir para o conteúdo\""
+       },
+       {
+        "action": "o leitor pressiona Enter",
+        "data": "",
+        "expected": "o foco vai para o início do conteúdo do artigo (#bodyContent)"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-a11y-busca-teclado",
+     "type": "case",
+     "title": "Validar pesquisa só com teclado",
+     "status": "approved",
+     "folderRef": "f-a11y",
+     "data": {
+      "objective": "Pesquisar não pode depender do mouse.",
+      "basis": [
+       "r-a11y"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "non-functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor acessa a Wikipédia em português sem login"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor usa Tab até o campo de pesquisa e digita o termo",
+        "data": "Santos Dum",
+        "expected": "o sistema mostra as sugestões"
+       },
+       {
+        "action": "o leitor usa seta para baixo e Enter",
+        "data": "",
+        "expected": "o sistema abre o artigo sugerido"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-a11y-menus-teclado",
+     "type": "case",
+     "title": "Validar menus Idiomas e Aparência só com teclado",
+     "status": "approved",
+     "folderRef": "f-a11y",
+     "data": {
+      "objective": "Menus que só abrem com mouse excluem quem usa teclado.",
+      "basis": [
+       "r-a11y"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "non-functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor usa Tab até o botão de idiomas e pressiona Enter",
+        "data": "",
+        "expected": "o sistema abre a lista de idiomas e o foco vai para o filtro"
+       },
+       {
+        "action": "o leitor pressiona Esc",
+        "data": "",
+        "expected": "o sistema fecha a lista e o foco volta ao botão"
+       },
+       {
+        "action": "o leitor usa Tab até o menu Aparência e escolhe Texto \"Grande\" com as setas",
+        "data": "",
+        "expected": "o sistema aplica o texto Grande"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-a11y-alt",
+     "type": "case",
+     "title": "Validar texto alternativo das imagens do artigo",
+     "status": "approved",
+     "folderRef": "f-a11y",
+     "data": {
+      "objective": "Leitor de tela depende do texto alternativo ou da legenda.",
+      "basis": [
+       "r-a11y"
+      ],
+      "priority": "medium",
+      "level": "system",
+      "types": [
+       "non-functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor confere cada imagem do corpo do artigo",
+        "data": "",
+        "expected": "toda imagem tem texto alternativo (alt) ou legenda visível; imagens decorativas são ignoradas pelo leitor de tela"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "c-a11y-foco",
+     "type": "case",
+     "title": "Validar foco visível ao navegar com Tab",
+     "status": "approved",
+     "folderRef": "f-a11y",
+     "data": {
+      "objective": "Sem foco visível o usuário de teclado se perde.",
+      "basis": [
+       "r-a11y"
+      ],
+      "priority": "low",
+      "level": "system",
+      "types": [
+       "non-functional",
+       "black-box"
+      ],
+      "technique": "checklist",
+      "category": [
+       "tt-functional"
+      ],
+      "tags": [
+       "tag:portfolio"
+      ],
+      "countries": [
+       "BR"
+      ],
+      "preconditions": [
+       "que o leitor está no artigo \"Brasil\" (https://pt.wikipedia.org/wiki/Brasil)"
+      ],
+      "data": "",
+      "steps": [
+       {
+        "action": "o leitor navega com Tab pelos 10 primeiros elementos",
+        "data": "",
+        "expected": "cada elemento focado tem contorno ou destaque visível"
+       }
+      ],
+      "postconditions": [],
+      "automation": "candidate",
+      "regression": "yes",
+      "estimate": 3
+     }
+    },
+    {
+     "ref": "s-smoke",
+     "type": "suite",
+     "title": "Smoke - Wikipédia",
+     "status": "approved",
+     "data": {
+      "purpose": "smoke",
+      "prioritization": "risk",
+      "cases": [
+       "c-busca-principal",
+       "c-busca-exata",
+       "c-busca-sugestao",
+       "c-art-titulo",
+       "c-idi-ingles",
+       "c-cel-layout"
+      ],
+      "criteria": "Casos críticos que mostram se dá para usar o site: página principal, pesquisa, artigo, idioma e celular."
+     }
+    },
+    {
+     "ref": "s-reg",
+     "type": "suite",
+     "title": "Regressão - Wikipédia",
+     "status": "approved",
+     "data": {
+      "purpose": "regression",
+      "prioritization": "coverage",
+      "cases": [
+       "c-busca-principal",
+       "c-busca-exata",
+       "c-busca-sugestao",
+       "c-busca-acento",
+       "c-busca-sem-resultado",
+       "c-busca-vazia",
+       "c-busca-especiais",
+       "c-busca-maiusculas",
+       "c-art-titulo",
+       "c-art-indice",
+       "c-art-sticky",
+       "c-art-link",
+       "c-art-refs",
+       "c-art-redirect",
+       "c-art-imagem",
+       "c-art-console",
+       "c-idi-botao",
+       "c-idi-ingles",
+       "c-idi-busca",
+       "c-idi-sem",
+       "c-pg-aleatoria",
+       "c-pg-historico",
+       "c-pg-inexistente",
+       "c-pg-citar",
+       "c-ap-menu",
+       "c-ap-texto",
+       "c-ap-largura",
+       "c-ap-escuro",
+       "c-ap-persistir",
+       "c-cel-layout",
+       "c-cel-secoes",
+       "c-cel-busca",
+       "c-cel-menu",
+       "c-cel-desktop",
+       "c-a11y-pular",
+       "c-a11y-busca-teclado",
+       "c-a11y-menus-teclado",
+       "c-a11y-alt",
+       "c-a11y-foco"
+      ],
+      "criteria": "Todos os casos marcados para regressão, rodados a cada push e toda segunda no CI."
      }
     }
    ]
